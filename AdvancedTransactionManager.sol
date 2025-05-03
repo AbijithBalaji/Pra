@@ -30,3 +30,6 @@ contract AdvancedTransactionManager {
         return balance[address(this)];
     }
 }
+
+
+###3.A – Develop smart contracts in Solidity & explore Hyperledger Fabric/Compose
