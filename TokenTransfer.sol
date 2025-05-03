@@ -18,3 +18,13 @@ contract TokenTransfer {
         return balances[who];
     }
 }
+
+
+2.A – Analyze Bitcoin mining process, wallets & EVM; implement TokenTransfer 
+Create TokenTransfer.sol in Remix and compile.
+
+Deploy under “JavaScript VM.” The deployer starts with a balance of 1000.
+
+In Deployed Contracts, enter another account address (e.g. 0xAbC…) and an amount like 200, click transfer.
+
+Click balanceOf for your account and the recipient to see balances updated.
