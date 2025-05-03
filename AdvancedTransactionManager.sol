@@ -33,3 +33,15 @@ contract AdvancedTransactionManager {
 
 
 ###3.A – Develop smart contracts in Solidity & explore Hyperledger Fabric/Compose
+
+Create AdvancedTransactionManager.sol, compile.
+
+Deploy to JavaScript VM.
+
+In the “Value” field above deploy, enter 1 (that’s 1 wei; for real tests use bigger). Click deploy → contract’s balance goes up.
+
+Call contractBalance to see it.
+
+As any account, try transferETH to send some back to e.g. 0x123….
+
+Switch to the owner account and call withdraw.
