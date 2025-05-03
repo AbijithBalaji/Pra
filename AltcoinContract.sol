@@ -20,3 +20,12 @@ contract AltcoinContract {
         return true;
     }
 }
+
+
+Create AltcoinContract.sol, compile.
+
+Deploy with an initial supply argument, e.g. 1000.
+
+After deployment, check balanceOf(deployer) → it will be 1000 * 10**18.
+
+Call transfer to move coins to another address, then check both balances again.
