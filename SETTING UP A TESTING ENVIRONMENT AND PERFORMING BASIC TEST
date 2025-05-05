@@ -1,0 +1,54 @@
+## 1. Selenium Java Setup & Basic Test
+
+### A. Install Prerequisites
+1. **Java JDK 1.8+**  
+   - Download & install from [Adoptium](https://adoptium.net/) or Oracle.  
+   - Verify in terminal/cmd:
+     ```bash
+     java -version
+     ```
+2. **Eclipse IDE**  
+   - Download & install from [eclipse.org](https://www.eclipse.org/downloads/).
+3. **Chrome Browser**  
+   - Install the latest version if not already present.
+
+### B. Download Selenium & ChromeDriver
+1. **Selenium Java**  
+   - Download the “Selenium Client & WebDriver Language Bindings (Java)” ZIP from  
+     http://www.seleniumhq.org/download  
+   - Unzip and place all `.jar` files into your Eclipse project’s `jars/` folder.
+2. **ChromeDriver**  
+   - Download the matching version from https://chromedriver.chromium.org/downloads  
+   - Unzip `chromedriver.exe` into your project’s `drivers/` folder.
+
+### C. Create Eclipse Project
+1. **File → New → Java Project** → **Project name:** `Automation`.
+2. **Right-click** on `Automation` → **New → Folder** → name it `jars`; repeat for `drivers`.
+3. Copy **all Selenium `.jar` files** into `jars/`, and **chromedriver.exe** into `drivers/`.
+4. **Right-click** project → **Build Path → Configure Build Path → Libraries → Add JARs…** → select everything under `jars/`.
+
+### D. Write & Run the “Hello Gmail” Test
+1. **Right-click** `src` → **New → Package** → `tests`.
+2. **Right-click** `tests` → **New → Class** → `GmailTest`.
+3. Paste:
+   ```java
+   package tests;
+
+   import org.openqa.selenium.WebDriver;
+   import org.openqa.selenium.chrome.ChromeDriver;
+
+   public class GmailTest {
+       public static void main(String[] args) {
+           // 1. Point to your driver executable
+           System.setProperty("webdriver.chrome.driver",
+               "drivers/chromedriver.exe");
+           // 2. Launch Chrome
+           WebDriver driver = new ChromeDriver();
+           // 3. Navigate to Gmail
+           driver.get("https://www.gmail.com/");
+           // 4. Print page title
+           System.out.println("Title is: " + driver.getTitle());
+           // 5. Close browser
+           driver.quit();
+       }
+   }
