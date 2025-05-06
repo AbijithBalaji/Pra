@@ -1,0 +1,58 @@
+# Experiment 5A: Building & Validating Linear Regression Models
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+
+# Load the datasets
+uci  = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# Select features and target
+features = ["Glucose", "BloodPressure", "BMI"]
+target   = "Age"
+
+X_uci,  y_uci  = uci[features],  uci[target]
+X_pima, y_pima = pima[features], pima[target]
+
+# Split into train/test (80/20)
+X_tr_u, X_te_u, y_tr_u, y_te_u = train_test_split(X_uci,  y_uci,  test_size=0.2, random_state=42)
+X_tr_p, X_te_p, y_tr_p, y_te_p = train_test_split(X_pima, y_pima, test_size=0.2, random_state=42)
+
+# Train models
+model_u = LinearRegression().fit(X_tr_u, y_tr_u)
+model_p = LinearRegression().fit(X_tr_p, y_tr_p)
+
+# Predict
+y_pr_u = model_u.predict(X_te_u)
+y_pr_p = model_p.predict(X_te_p)
+
+# Evaluate & print
+print("UCI Diabetes — Linear Regression Results:")
+print(f"  R² Score: {r2_score(y_te_u, y_pr_u):.4f}")
+print(f"  MSE:      {mean_squared_error(y_te_u, y_pr_u):.4f}")
+print(f"  MAE:      {mean_absolute_error(y_te_u, y_pr_u):.4f}\n")
+
+print("Pima Indians Diabetes — Linear Regression Results:")
+print(f"  R² Score: {r2_score(y_te_p, y_pr_p):.4f}")
+print(f"  MSE:      {mean_squared_error(y_te_p, y_pr_p):.4f}")
+print(f"  MAE:      {mean_absolute_error(y_te_p, y_pr_p):.4f}")
+
+# Plot Actual vs Predicted for UCI
+plt.figure(figsize=(6,4))
+plt.scatter(y_te_u, y_pr_u, alpha=0.6)
+plt.plot([y_te_u.min(), y_te_u.max()], [y_te_u.min(), y_te_u.max()], 'r--')
+plt.xlabel("Actual Age"); plt.ylabel("Predicted Age")
+plt.title("UCI: Actual vs Predicted Age")
+plt.show()
+
+# Plot for Pima
+plt.figure(figsize=(6,4))
+plt.scatter(y_te_p, y_pr_p, alpha=0.6)
+plt.plot([y_te_p.min(), y_te_p.max()], [y_te_p.min(), y_te_p.max()], 'r--')
+plt.xlabel("Actual Age"); plt.ylabel("Predicted Age")
+plt.title("Pima: Actual vs Predicted Age")
+plt.show()
