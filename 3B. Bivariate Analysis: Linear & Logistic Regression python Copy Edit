@@ -1,0 +1,41 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model  import LinearRegression, LogisticRegression
+from sklearn.metrics       import r2_score, accuracy_score
+
+# Load datasets
+uci  = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# 1) Linear Regression: Glucose → BMI
+def run_linear(df, name):
+    X = df[["Glucose"]]
+    y = df["BMI"]
+    model = LinearRegression().fit(X, y)
+    y_pred = model.predict(X)
+    r2 = r2_score(y, y_pred)
+    print(f"{name} Linear R² = {r2:.4f}")
+    plt.scatter(X, y, label="data")
+    plt.plot(X, y_pred, color="red", label="fit")
+    plt.title(f"{name}: Glucose vs BMI")
+    plt.xlabel("Glucose"); plt.ylabel("BMI"); plt.legend(); plt.show()
+    return r2
+
+r2_uci_linear  = run_linear(uci,  "UCI")
+r2_pima_linear = run_linear(pima, "Pima")
+
+# 2) Logistic Regression: features → Outcome
+features = ["Glucose", "BloodPressure", "BMI"]
+def run_logistic(df, name):
+    X = df[features]
+    y = df["Outcome"]
+    Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=0)
+    model = LogisticRegression(max_iter=1000).fit(Xtr, ytr)
+    acc = accuracy_score(yte, model.predict(Xte))
+    print(f"{name} Logistic accuracy = {acc*100:.1f}%")
+    return acc
+
+acc_uci_log  = run_logistic(uci,  "UCI")
+acc_pima_log = run_logistic(pima, "Pima")
