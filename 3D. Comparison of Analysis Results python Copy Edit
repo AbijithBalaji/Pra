@@ -1,0 +1,4 @@
+print("=== Comparison of Key Metrics ===")
+print(f"• Linear R²            → UCI: {r2_uci_linear:.4f},  Pima: {r2_pima_linear:.4f}")
+print(f"• Logistic accuracy    → UCI: {acc_uci_log*100:.1f}%,  Pima: {acc_pima_log*100:.1f}%")
+print(f"• Multiple R²          → UCI: {r2_uci_multi:.4f},  Pima: {r2_pima_multi:.4f}")
