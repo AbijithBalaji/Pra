@@ -1,0 +1,25 @@
+# Experiment 2D: Descriptive Analytics on Iris Dataset
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 1. Load the Iris dataset
+iris = sns.load_dataset('iris')
+print("Iris head:\n", iris.head())
+
+# 2. Summary statistics
+print("\nSummary stats:\n", iris.describe())
+
+# 3. Count of each species
+print("\nSpecies counts:\n", iris['species'].value_counts())
+
+# 4. Mean petal length by species
+print("\nMean petal length by species:\n",
+      iris.groupby('species')['petal_length'].mean())
+
+# 5. Correlation matrix
+print("\nCorrelation matrix:\n", iris.corr())
+
+# 6. Visual: pairplot
+sns.pairplot(iris, hue='species')
+plt.show()
