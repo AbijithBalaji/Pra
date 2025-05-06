@@ -1,0 +1,18 @@
+import pandas as pd
+from statsmodels.stats.weightstats import ztest
+
+# Load the UCI Diabetes dataset
+uci = pd.read_csv("uci_diabetes.csv")
+
+# H₀: mean Glucose = 100
+z_stat, p_value = ztest(uci["Glucose"], value=100)
+
+print(f"Z-Statistic: {z_stat:.4f}")
+print(f"P-Value:     {p_value:.4f}")
+
+# 5% significance
+alpha = 0.05
+if p_value < alpha:
+    print("Reject H₀: mean Glucose is significantly different from 100.")
+else:
+    print("Fail to reject H₀: no significant difference.") 
