@@ -1,0 +1,31 @@
+# Experiment 2B: Pandas DataFrame Operations
+import pandas as pd
+import numpy as np
+
+# 1. Create a DataFrame
+df = pd.DataFrame({
+    'A': np.random.randint(1, 100, size=10),
+    'B': np.random.choice(['X', 'Y', 'Z'], size=10),
+    'C': np.random.randn(10)
+})
+print("Original DataFrame:\n", df)
+
+# 2. Head & tail
+print("\nFirst 5 rows:\n", df.head())
+print("Last 5 rows:\n", df.tail())
+
+# 3. Describe numeric columns
+print("\nSummary stats:\n", df.describe())
+
+# 4. Filter rows (A > 50)
+print("\nRows where A > 50:\n", df[df['A'] > 50])
+
+# 5. Add column D = A + C
+df['D'] = df['A'] + df['C']
+print("\nWith new column D:\n", df)
+
+# 6. Group by B, mean of A
+print("\nMean(A) by B:\n", df.groupby('B')['A'].mean())
+
+# 7. Sort by C descending
+print("\nSorted by C desc:\n", df.sort_values('C', ascending=False))
