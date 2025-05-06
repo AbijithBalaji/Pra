@@ -1,0 +1,37 @@
+import pandas as pd
+import numpy as np
+from scipy.stats import skew, kurtosis
+
+# Load datasets
+uci = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# Show samples
+print("UCI Diabetes sample:\n", uci.head(), "\n")
+print("Pima Indians Diabetes sample:\n", pima.head(), "\n")
+
+# Columns to analyze
+numerical_cols = ["Glucose", "BloodPressure", "SkinThickness",
+                  "Insulin", "BMI", "DiabetesPedigreeFunction", "Age"]
+
+# Univariate stats function
+def univariate_analysis(df, cols):
+    stats = {}
+    for c in cols:
+        stats[c] = {
+            "Mean": np.mean(df[c]),
+            "Median": np.median(df[c]),
+            "Mode": df[c].mode()[0],
+            "Variance": np.var(df[c], ddof=1),
+            "Std Dev": np.std(df[c], ddof=1),
+            "Skewness": skew(df[c]),
+            "Kurtosis": kurtosis(df[c])
+        }
+    return pd.DataFrame(stats).T
+
+# Compute & display
+uci_stats  = univariate_analysis(uci,  numerical_cols)
+pima_stats = univariate_analysis(pima, numerical_cols)
+
+print("UCI Diabetes stats:\n",  uci_stats,  "\n")
+print("Pima Indians stats:\n", pima_stats) 
