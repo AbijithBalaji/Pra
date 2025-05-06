@@ -1,0 +1,62 @@
+# Experiment 5B: Building & Validating Logistic Regression Models
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+
+# Load the datasets
+uci  = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# Select features and target
+features = ["Glucose", "BloodPressure", "BMI"]
+target   = "Outcome"
+
+X_uci,  y_uci  = uci[features],  uci[target]
+X_pima, y_pima = pima[features], pima[target]
+
+# Split into train/test (80/20)
+X_tr_u, X_te_u, y_tr_u, y_te_u = train_test_split(X_uci,  y_uci,  test_size=0.2, random_state=42)
+X_tr_p, X_te_p, y_tr_p, y_te_p = train_test_split(X_pima, y_pima, test_size=0.2, random_state=42)
+
+# Train models
+model_u = LogisticRegression(max_iter=1000).fit(X_tr_u, y_tr_u)
+model_p = LogisticRegression(max_iter=1000).fit(X_tr_p, y_tr_p)
+
+# Predict
+y_pr_u = model_u.predict(X_te_u)
+y_pr_p = model_p.predict(X_te_p)
+
+# Evaluate metrics
+metrics = {}
+metrics['UCI']  = {
+    'Accuracy':  accuracy_score(y_te_u, y_pr_u),
+    'Precision': precision_score(y_te_u, y_pr_u),
+    'Recall':    recall_score(y_te_u, y_pr_u),
+    'F1 Score':  f1_score(y_te_u, y_pr_u)
+}
+metrics['Pima'] = {
+    'Accuracy':  accuracy_score(y_te_p, y_pr_p),
+    'Precision': precision_score(y_te_p, y_pr_p),
+    'Recall':    recall_score(y_te_p, y_pr_p),
+    'F1 Score':  f1_score(y_te_p, y_pr_p)
+}
+
+for name, m in metrics.items():
+    print(f"{name} Dataset — Logistic Regression Results:")
+    print(f"  Accuracy:  {m['Accuracy']:.4f}")
+    print(f"  Precision: {m['Precision']:.4f}")
+    print(f"  Recall:    {m['Recall']:.4f}")
+    print(f"  F1 Score:  {m['F1 Score']:.4f}\n")
+
+# Plot confusion matrices side-by-side
+fig, axes = plt.subplots(1, 2, figsize=(12,5))
+sns.heatmap(confusion_matrix(y_te_u, y_pr_u), annot=True, fmt='d', ax=axes[0])
+axes[0].set(title="UCI Confusion Matrix", xlabel="Predicted", ylabel="Actual")
+sns.heatmap(confusion_matrix(y_te_p, y_pr_p), annot=True, fmt='d', ax=axes[1])
+axes[1].set(title="Pima Confusion Matrix", xlabel="Predicted", ylabel="Actual")
+plt.tight_layout()
+plt.show()
