@@ -1,0 +1,27 @@
+# Experiment 2A: NumPy Array Operations
+import numpy as np
+
+# 1. Create a 1D array of numbers 0 to 9
+arr1 = np.arange(10)
+print("1D array:", arr1)
+
+# 2. Reshape into a 2×5 array
+arr2 = arr1.reshape((2, 5))
+print("\n2×5 array:\n", arr2)
+
+# 3. Basic statistics
+print("\nMean:", np.mean(arr2))
+print("Std dev:", np.std(arr2))
+print("Sum along axis 0:", np.sum(arr2, axis=0))
+print("Sum along axis 1:", np.sum(arr2, axis=1))
+
+# 4. Indexing & slicing
+print("\nElement [1,3]:", arr2[1, 3])
+print("First row:", arr2[0, :])
+print("Last column:", arr2[:, -1])
+
+# 5. Boolean masking (even values)
+print("\nEven elements:", arr2[arr2 % 2 == 0])
+
+# 6. Vectorized operation: square each element
+print("\nSquared array:\n", arr2**2)
