@@ -1,0 +1,18 @@
+import pandas as pd
+from scipy.stats import ttest_ind
+
+# Load both datasets
+uci  = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# Columns to compare
+cols = ["Glucose", "BloodPressure", "BMI"]
+
+# Conduct independent (unpaired) t-tests
+results = {}
+for col in cols:
+    t_stat, p_val = ttest_ind(uci[col], pima[col], equal_var=False)
+    results[col] = {"T-statistic": t_stat, "P-value": p_val}
+
+t_test_df = pd.DataFrame(results).T
+print("T-Test Results:\n", t_test_df)
