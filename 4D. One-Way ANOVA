@@ -1,0 +1,18 @@
+import pandas as pd
+from scipy.stats import f_oneway
+
+# Load both datasets
+uci  = pd.read_csv("uci_diabetes.csv")
+pima = pd.read_csv("pima_diabetes.csv")
+
+# Columns to test
+cols = ["Glucose", "BloodPressure", "BMI"]
+
+# Perform one-way ANOVA
+anova_results = {}
+for col in cols:
+    f_stat, p_val = f_oneway(uci[col], pima[col])
+    anova_results[col] = {"F-statistic": f_stat, "P-value": p_val}
+
+anova_df = pd.DataFrame(anova_results).T
+print("ANOVA Results:\n", anova_df)
