@@ -1,0 +1,30 @@
+# Experiment 2C: Reading Data from Various Sources
+import pandas as pd
+
+# --- Part 1: Text (CSV) file created on the fly
+csv_data = """Name,Age,Score
+Alice,24,85
+Bob,27,90
+Charlie,22,78
+"""
+with open('sample.txt', 'w') as f:
+    f.write(csv_data)
+
+df_text = pd.read_csv('sample.txt')
+print("From text file:\n", df_text)
+
+# --- Part 2: Excel file created on the fly
+df_excel_orig = pd.DataFrame({
+    'Product': ['Widget', 'Gadget', 'Doodad'],
+    'Price': [23.50, 17.99, 5.75],
+    'Quantity': [10, 15, 7]
+})
+df_excel_orig.to_excel('sample.xlsx', index=False)
+
+df_excel = pd.read_excel('sample.xlsx')
+print("\nFrom Excel file:\n", df_excel)
+
+# --- Part 3: Read CSV directly from the web
+url = 'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv'
+df_web = pd.read_csv(url)
+print("\nFrom web (first 5 rows):\n", df_web.head())
