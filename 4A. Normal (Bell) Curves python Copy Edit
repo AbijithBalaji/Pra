@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+
+# Load the UCI Diabetes dataset
+uci = pd.read_csv("uci_diabetes.csv")
+
+# Plot Normal Curves for Glucose and BMI
+plt.figure(figsize=(12, 5))
+
+# Glucose distribution
+plt.subplot(1, 2, 1)
+sns.histplot(uci["Glucose"], kde=True, stat="density", linewidth=0)
+x = np.linspace(uci["Glucose"].min(), uci["Glucose"].max(), 100)
+plt.plot(x, norm.pdf(x, uci["Glucose"].mean(), uci["Glucose"].std()), 'r')
+plt.title("Normal Curve – Glucose")
+
+# BMI distribution
+plt.subplot(1, 2, 2)
+sns.histplot(uci["BMI"], kde=True, stat="density", linewidth=0)
+x = np.linspace(uci["BMI"].min(), uci["BMI"].max(), 100)
+plt.plot(x, norm.pdf(x, uci["BMI"].mean(), uci["BMI"].std()), 'r')
+plt.title("Normal Curve – BMI")
+
+plt.tight_layout()
+plt.show()
